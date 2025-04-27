@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# PyTorch model checkpoints
+*.pt
+*.pth
+*.ckpt
+
+# Environment files
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# VSCode settings
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log
+
+# Cache and temporary files
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# PyTorch Lightning cache (if using)
+lightning_logs/
+
+# Other
+*.onnx
