@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "Shallowing-neural-network"
+version = "0.1.0"
+description = "A short description of your project"
+authors = ["Seyedalireza Yaghoubi <Syaghoubi@uni-osnabrueck.de>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+torch = "^2.1.0"
+numpy = "^1.24.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.2.0"
+black = "^24.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
