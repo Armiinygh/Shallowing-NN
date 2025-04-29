@@ -17,12 +17,14 @@ class FeedForwadNet(nn.Module):
         self.flatten = nn.Flatten()
         self.dense_layers = nn.Sequential(
             nn.Linear(
-                28*28, 256
+                28*28, 512
             ), 
             nn.ReLU(),
             nn.Linear(256, 10)
         )
         self.softmax = nn.Softmax(dim = 1)
+        #TODO add model confidency 
+        
     
     def forward (self, input_data):
         flattened_data = self.flatten(input_data)
@@ -98,4 +100,8 @@ if __name__ == "__main__":
     
     
     #TODO separate each module to a class 
+    #BUG the weights should update after each iteration, Curretnly they can not be updated!
+    
+    
+    
     
