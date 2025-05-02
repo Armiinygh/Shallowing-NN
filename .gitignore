@@ -16,6 +16,10 @@ build/
 *.pth
 *.ckpt
 
+# Dataset
+/*/data
+/*/*/data
+
 # Environment files
 .env
 .venv/
@@ -33,7 +37,6 @@ env/
 *.log
 
 # Cache and temporary files
-*.bak
 *.tmp
 *.swp
 *.swo
@@ -43,3 +46,10 @@ lightning_logs/
 
 # Other
 *.onnx
+*.bak
+
+/myenv
+/src/Shallow_nn/myenv_3.10
+.gz
+
+
