@@ -4,7 +4,10 @@ from torchvision import datasets
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 import ssl
+from Config.config import cfg
+
 ssl._create_default_https_context = ssl._create_unverified_context
+
 
 
 BATCH_SIZE = 128
@@ -17,7 +20,7 @@ class FeedForwadNet(nn.Module):
         self.flatten = nn.Flatten()
         self.dense_layers = nn.Sequential(
             nn.Linear(
-                28*28, 512
+                28*28, 256
             ), 
             nn.ReLU(),
             nn.Linear(256, 10)
@@ -77,19 +80,19 @@ if __name__ == "__main__":
 
 
 
-    train_data_loader = DataLoader(train_data , batch_size = BATCH_SIZE)
+    train_data_loader = DataLoader(train_data , batch_size = cfg.batch_size)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
     feed_forward_net = FeedForwadNet().to(device=device)
     
     
     loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(feed_forward_net.parameters(), lr = LEARNING_RATE)
+    optimizer = torch.optim.Adam(feed_forward_net.parameters(), lr = cfg.learning_rate)
     
     
     
     
-    train(feed_forward_net, train_data_loader, loss_fn, optimizer , device ,EPOCHS)
+    train(feed_forward_net, train_data_loader, loss_fn, optimizer , device ,cfg.epochs)
     
     file_path = "feedforwardnet.pth"
     torch.save(feed_forward_net.state_dict(), file_path)
