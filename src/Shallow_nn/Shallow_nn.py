@@ -9,7 +9,9 @@ from Plot.plot import plot_loss
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-loss_values = []
+train_loss = []
+test_loss = []
+
 
 class FeedForwadNet(nn.Module):
     def __init__(self):
@@ -29,7 +31,7 @@ class FeedForwadNet(nn.Module):
     def forward (self, input_data):
         flattened_data = self.flatten(input_data)
         logits = self.dense_layers(flattened_data)
-        return self.softmax(logits)
+        return logits
     
 
 def download_mnist_datasets():
@@ -61,7 +63,7 @@ def train_one_epoch(model , data_loader, loss_fn, optimizer, device):
         loss.backward()
         optimizer.step()
 
-    loss_values.append(loss.item())
+    train_loss.append(loss.item())
     print(f"Loss : {loss.item()}")
 
 def train(model , data_loader, loss_fn, optimizer, device, epochs) :
@@ -69,7 +71,7 @@ def train(model , data_loader, loss_fn, optimizer, device, epochs) :
         print(f"Epoch :{i+1}")
         train_one_epoch(model , data_loader, loss_fn, optimizer, device)
         print("-" * 10)
-    plot_loss(loss_values)
+    plot_loss(train_loss , "Train")
     print("Training is complete!")     
 
 
@@ -80,7 +82,7 @@ def train_model():
 
 
     train_data_loader = DataLoader(train_data , batch_size = cfg.batch_size)
-    test_data_loader = DataLoader(test_data , batch_size = cfg.batch_size)
+    test_data_loader = DataLoader(test_data , batch_size = cfg.batch_size, shuffle=True)
     
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
@@ -94,15 +96,23 @@ def train_model():
     #Evaluation 
     correct = 0
     total = 0
+    i = 0
     model.eval()
     with torch.no_grad():
-        for images,labels in test_data_loader:
-            images, labels = images.to(device) , labels.to(device)
+            
+        for images, targets in test_data_loader:
+            if i == cfg.epochs:
+                break
+            images, targets = images.to(device), targets.to(device)
+            targets = targets.long()
             outputs = model(images)
+            # Use outputs (not predictions) for loss calculation
+            test_loss.append(loss_fn(outputs, targets).item())
             _, prediction = torch.max(outputs, 1)
-            total += labels.size(0)
-            correct += (prediction == labels ).sum().item()
-    
+            total += targets.size(0)
+            correct += (prediction == targets).sum().item()
+            i += 1
+    plot_loss(test_loss, "Test")
     print(f"Test Accuracy: {100 * correct / total:.2f}%")
 
     
