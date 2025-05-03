@@ -1,5 +1,11 @@
 # Shallowing Neural Networks
 
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Last Commit](https://img.shields.io/github/last-commit/Armiinygh/Shallowing-NN.svg)](https://github.com/Armiinygh/Shallowing-NN/commits/main)
+[![Issues](https://img.shields.io/github/issues/Armiinygh/Shallowing-NN.svg)](https://github.com/Armiinygh/Shallowing-NN/issues)
+
 An implementation of Shallow Neural Networks for the seminar 'Understanding Deep Learning' in the Winter Semester 2025. This project explores the capabilities and limitations of shallow neural networks using the MNIST dataset as a benchmark.
 
 ## Authors
@@ -66,7 +72,7 @@ This project implements a shallow neural network architecture to classify handwr
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/Shallowing-NN.git
+git clone https://github.com/Armiinygh/Shallowing-NN.git
 cd Shallowing-NN
 ```
 
