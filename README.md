@@ -10,6 +10,20 @@ An implementation of Shallow Neural Networks for the seminar 'Understanding Deep
 
 ## Project Structure
 
+The project follows a modular structure:
+
+```plaintext
+Shallowing-NN/
+├── src/
+│   ├── Config/
+│   │   └── config.py         # Configuration parameters
+│   ├── Plot/
+│   │   └── plot.py          # Plotting utilities
+│   └── Shallow_nn/
+│       └── Shallow_nn.py    # Core neural network implementation
+├── main.py                  # Entry point
+├── pyproject.toml           # Project dependencies and metadata
+└── README.md               # Project documentation
 ```
 
 ## Project Description
