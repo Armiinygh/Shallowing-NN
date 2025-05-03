@@ -9,6 +9,8 @@ from Config.config import cfg
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
+print("Module has been implemented!")
+
 
 BATCH_SIZE = 128
 EPOCHS = 10
@@ -20,10 +22,10 @@ class FeedForwadNet(nn.Module):
         self.flatten = nn.Flatten()
         self.dense_layers = nn.Sequential(
             nn.Linear(
-                28*28, 256
+                28*28, cfg.output_size
             ), 
             nn.ReLU(),
-            nn.Linear(256, 10)
+            nn.Linear(cfg.output_size, 10)
         )
         self.softmax = nn.Softmax(dim = 1)
         #TODO add model confidency 
@@ -63,6 +65,8 @@ def train_one_epoch(model , data_loader, loss_fn, optimizer, device):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+
+        
     print(f"Loss : {loss.item()}")
 
 def train(model , data_loader, loss_fn, optimizer, device, epochs) :
@@ -74,7 +78,7 @@ def train(model , data_loader, loss_fn, optimizer, device, epochs) :
      
 
 
-if __name__ == "__main__":
+def train_model():
     train_data , _ = download_mnist_datasets()
     print("MNIST dataset has been downloaded")
 
@@ -86,6 +90,8 @@ if __name__ == "__main__":
     feed_forward_net = FeedForwadNet().to(device=device)
     
     
+    
+    #TODO Set up new Configurations for the loss function and optimizer 
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(feed_forward_net.parameters(), lr = cfg.learning_rate)
     
@@ -103,8 +109,6 @@ if __name__ == "__main__":
     
     
     #TODO separate each module to a class 
-    #BUG the weights should update after each iteration, Curretnly they can not be updated!
-    
-    
+    #TODO plot the loss functions and every other parameter that make sense using different values and compare it to the results of the deep neural networks 
     
     
