@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 
 
 def plot_loss(loss, mode):
-    plt.clf()
+    
     if mode == "Train": 
+        plt.clf()
         plt.plot(loss)
-        plt.title("Loss values in each epoch step")
+        plt.title("Train loss values in each epoch step")
         labels = [i+1 for i in range(cfg.epochs)]
         x = list(range(cfg.epochs))
         plt.xticks(ticks = x , labels=labels)
@@ -16,7 +17,7 @@ def plot_loss(loss, mode):
     
     if mode == "Test":
         plt.plot(loss)
-        plt.title("Loss values in each epoch step")
+        plt.title("Test loss values in each epoch step")
         labels = [i+1 for i in range(cfg.epochs)]
         x = list(range(cfg.epochs))
         plt.xticks(ticks = x , labels=labels)
@@ -25,12 +26,14 @@ def plot_loss(loss, mode):
         plt.savefig('src/Plot/Test_loss.png')
         
     if mode == "Confidence":
+        plt.clf()
         plt.hist(loss, bins=20, range=(0, 1), color='skyblue',edgecolor='black' , alpha=0.7)
         plt.title("Confidence values in each epoch step")
         plt.xlabel('Confidence value')
         plt.ylabel('Frequency')
         plt.savefig('src/Plot/Confidence.png')
     if mode == "Correctness":
+        plt.clf()
         confidences, predictions, targets = loss 
         confidences = confidences.cpu().numpy()
         predictions = predictions.cpu().numpy()
