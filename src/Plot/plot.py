@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_loss(loss, mode):
-    print(f"Loss: {loss}")
+    plt.clf()
     if mode == "Train": 
         plt.plot(loss)
         plt.title("Loss values in each epoch step")
@@ -23,6 +23,24 @@ def plot_loss(loss, mode):
         plt.xlabel('Epoch')
         plt.ylabel('Loss value')
         plt.savefig('src/Plot/Test_loss.png')
-    
+        
+    if mode == "Confidence":
+        plt.hist(loss, bins=20, range=(0, 1), color='skyblue',edgecolor='black' , alpha=0.7)
+        plt.title("Confidence values in each epoch step")
+        plt.xlabel('Confidence value')
+        plt.ylabel('Frequency')
+        plt.savefig('src/Plot/Confidence.png')
+    if mode == "Correctness":
+        confidences, predictions, targets = loss 
+        confidences = confidences.cpu().numpy()
+        predictions = predictions.cpu().numpy()
+        targets = targets.cpu().numpy()
+        correct = (predictions == targets).astype(float)
+        plt.scatter(range(len(confidences)), confidences, c=correct, cmap='viridis')
+        plt.title("Prediction Correctness vs Confidence")
+        plt.xlabel('Index')
+        plt.ylabel('Confidence value')
+        plt.colorbar(label='Correct (1) / Incorrect (0)')
+        plt.savefig('src/Plot/Correctness.png')
 
 

@@ -25,7 +25,6 @@ class FeedForwadNet(nn.Module):
             nn.Linear(cfg.output_size, 10)
         )
         self.softmax = nn.Softmax(dim = 1)
-        #TODO add model confidency 
         
     
     def forward (self, input_data):
@@ -106,6 +105,8 @@ def train_model():
             images, targets = images.to(device), targets.to(device)
             targets = targets.long()
             outputs = model(images)
+            probs = torch.softmax(outputs, dim=1)
+            confidence, predictions  = torch.max(probs, dim=1)
             # Use outputs (not predictions) for loss calculation
             test_loss.append(loss_fn(outputs, targets).item())
             _, prediction = torch.max(outputs, 1)
@@ -113,6 +114,9 @@ def train_model():
             correct += (prediction == targets).sum().item()
             i += 1
     plot_loss(test_loss, "Test")
+    plot_loss(confidence, "Confidence")
+    data = confidence, predictions, targets
+    plot_loss(data, "Correctness")
     print(f"Test Accuracy: {100 * correct / total:.2f}%")
 
     
