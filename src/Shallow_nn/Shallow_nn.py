@@ -8,10 +8,6 @@ from Config.config import cfg
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-
-print("Module has been implemented!")
-
-
 BATCH_SIZE = 128
 EPOCHS = 10
 LEARNING_RATE = 0.1
