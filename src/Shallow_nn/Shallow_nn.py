@@ -5,12 +5,11 @@ from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 import ssl
 from Config.config import cfg
+from Plot.plot import plot_loss
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-BATCH_SIZE = 128
-EPOCHS = 10
-LEARNING_RATE = 0.1
+loss_values = []
 
 class FeedForwadNet(nn.Module):
     def __init__(self):
@@ -20,7 +19,7 @@ class FeedForwadNet(nn.Module):
             nn.Linear(
                 28*28, cfg.output_size
             ), 
-            nn.ReLU(),
+            cfg.activation_function,
             nn.Linear(cfg.output_size, 10)
         )
         self.softmax = nn.Softmax(dim = 1)
@@ -62,7 +61,7 @@ def train_one_epoch(model , data_loader, loss_fn, optimizer, device):
         loss.backward()
         optimizer.step()
 
-        
+    loss_values.append(loss.item())
     print(f"Loss : {loss.item()}")
 
 def train(model , data_loader, loss_fn, optimizer, device, epochs) :
@@ -70,34 +69,45 @@ def train(model , data_loader, loss_fn, optimizer, device, epochs) :
         print(f"Epoch :{i+1}")
         train_one_epoch(model , data_loader, loss_fn, optimizer, device)
         print("-" * 10)
-    print("Training is complete!")
-     
+    plot_loss(loss_values)
+    print("Training is complete!")     
 
 
 def train_model():
-    train_data , _ = download_mnist_datasets()
+    train_data , test_data = download_mnist_datasets()
     print("MNIST dataset has been downloaded")
 
 
 
     train_data_loader = DataLoader(train_data , batch_size = cfg.batch_size)
+    test_data_loader = DataLoader(test_data , batch_size = cfg.batch_size)
+    
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
-    feed_forward_net = FeedForwadNet().to(device=device)
+    model = FeedForwadNet().to(device=device)
     
+    loss_fn = cfg.loss_function
+    optimizer = torch.optim.Adam(model.parameters(), lr = cfg.learning_rate)
     
+    train(model, train_data_loader, loss_fn, optimizer , device ,cfg.epochs)
     
-    #TODO Set up new Configurations for the loss function and optimizer 
-    loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(feed_forward_net.parameters(), lr = cfg.learning_rate)
+    #Evaluation 
+    correct = 0
+    total = 0
+    model.eval()
+    with torch.no_grad():
+        for images,labels in test_data_loader:
+            images, labels = images.to(device) , labels.to(device)
+            outputs = model(images)
+            _, prediction = torch.max(outputs, 1)
+            total += labels.size(0)
+            correct += (prediction == labels ).sum().item()
     
-    
-    
-    
-    train(feed_forward_net, train_data_loader, loss_fn, optimizer , device ,cfg.epochs)
+    print(f"Test Accuracy: {100 * correct / total:.2f}%")
+
     
     file_path = "feedforwardnet.pth"
-    torch.save(feed_forward_net.state_dict(), file_path)
+    torch.save(model.state_dict(), file_path)
     
     
     print(f"Model has been trained and stored at {file_path}")
