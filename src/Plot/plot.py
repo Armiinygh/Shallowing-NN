@@ -1,7 +1,7 @@
 from Config.config import cfg
 import matplotlib.pyplot as plt
 
-
+#TODO add legends
 def plot_loss(loss, mode):
     
     if mode == "Train": 
