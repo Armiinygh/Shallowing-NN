@@ -16,9 +16,7 @@ class FeedForwadNet(nn.Module):
         super().__init__()
         self.flatten = nn.Flatten()
         self.dense_layers = nn.Sequential(
-            nn.Linear(
-                28*28, 256
-            ), 
+            nn.Linear(28*28, 256), 
             nn.ReLU(),
             nn.Linear(256, 10)
         )
