@@ -81,14 +81,7 @@ cd Shallowing-NN
 poetry install
 ```
 
-Alternatively, if you prefer using pip:
-```bash
-python -m venv myenv
-source myenv/bin/activate  # On Windows: myenv\Scripts\activate
-pip install -r requirements.txt
-```
-
-2nd Alternative, use conda:
+*2nd Alternative, use conda:*
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
 
 ```bash
