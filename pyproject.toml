@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "Shallowing-neural-network"
 version = "0.1.0"
-description = "A short description of your project"
+description = "Comparing deep and shallow neural networks"
 authors = ["Seyedalireza Yaghoubi <Syaghoubi@uni-osnabrueck.de>"]
 license = "MIT"
+
+[tool.poetry.packages]
+shallowing-neural-network = ["src/shallowing_neural_network/*"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
