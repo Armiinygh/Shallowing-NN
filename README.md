@@ -88,6 +88,11 @@ source myenv/bin/activate  # On Windows: myenv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+2nd Alternative, use conda:
+   1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
+   2. install the dependencies:  "conda install pytorch::pytorch", "conda install conda-forge::matplotlib", and "conda install anaconda::numpy"
+   3. activate the environment you have created and run the code of the project.
+ 
 ## Usage
 
 ### Running the Model
