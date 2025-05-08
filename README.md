@@ -92,7 +92,7 @@ conda create -n understanding_dl_shallow_network
 conda activate understanding_dl_shallow_network
 ```
 
-   3. install the dependencies:  "conda install pytorch::pytorch", "conda install conda-forge::matplotlib", and "conda install anaconda::numpy"
+   3. install the dependencies:  numpy, matplotlib, and pytorch
 ```bash
 conda install anaconda::numpy
 ```
@@ -101,7 +101,7 @@ conda install conda-forge::matplotlib
 ```
 
 ```bash
-conda install pytorch::pytorch
+conda install pytorch torchvision cudatoolkit=11.1 -c pytorch
 ```
    4. Run the code of the project in the activated conda environment that you had created in step 1.  
  
