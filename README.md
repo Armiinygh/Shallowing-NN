@@ -90,8 +90,27 @@ pip install -r requirements.txt
 
 2nd Alternative, use conda:
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
-   2. install the dependencies:  "conda install pytorch::pytorch", "conda install conda-forge::matplotlib", and "conda install anaconda::numpy"
-   3. activate the environment you have created and run the code of the project.
+
+```bash
+conda create -n understanding_dl_shallow_network
+```
+   2. Activate the environment:
+```bash
+conda activate understanding_dl_shallow_network
+```
+
+   3. install the dependencies:  "conda install pytorch::pytorch", "conda install conda-forge::matplotlib", and "conda install anaconda::numpy"
+```bash
+conda install anaconda::numpy
+```
+```bash
+conda install conda-forge::matplotlib
+```
+
+```bash
+conda install pytorch::pytorch
+```
+   4. Run the code of the project in the activated conda environment that you had created in step 1.  
  
 ## Usage
 
