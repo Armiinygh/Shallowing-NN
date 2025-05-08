@@ -81,7 +81,7 @@ cd Shallowing-NN
 poetry install
 ```
 
-### Alternative, use conda:
+#### Alternative, use conda:
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
 
 ```bash
