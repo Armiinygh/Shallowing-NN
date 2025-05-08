@@ -76,12 +76,12 @@ git clone https://github.com/Armiinygh/Shallowing-NN.git
 cd Shallowing-NN
 ```
 
-2. Install dependencies using Poetry:
+#### 2a. Install dependencies using Poetry:
 ```bash
 poetry install
 ```
 
-#### Alternative, use conda:
+#### 2b. Alternative to poetry, use conda:
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
 
 ```bash
