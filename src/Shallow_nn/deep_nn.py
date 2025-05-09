@@ -58,7 +58,8 @@ class DeepNet(nn.Module):
 
         # splitting the data into batches for decreasing computational demand duwing training
         train_loader = torch.utils.data.DataLoader(data, batch_size=64, shuffle=True)
-        return train_loader
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
+        return train_loader, test_loader
 
 # setting model and optimizer
 model = DeepNet()
@@ -79,8 +80,22 @@ for epoch in range(n_epochs):
     # printing current epoch starting from 1 not o, printing loss up to 4 decimals
     print(f'Finished epoch {epoch + 1}, latest loss: {loss.item():.4f}')
 
-#EVALUATION
-model.eval()  
+# Evaluating the model
+model.eval() 
+correct = 0
+total = 0
+
+with torch.no_grad():
+    for batch in test_loader:
+        X_batch, y_batch = batch
+        y_pred = model(X_batch)
+        _, predicted = torch.max(y_pred, 1) 
+        total += y_batch.size(0)
+        correct += (predicted == y_batch).sum().item()
+
+# Calculating accuracy
+accuracy = (correct / total) * 100
+print(f'Accuracy on the test set: {accuracy:.2f}%')
 
 # Plot results with mathplotlib
 # MSE & accuracy & correctness & confidency (probabilities - logits after using softmax)
