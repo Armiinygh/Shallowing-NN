@@ -70,11 +70,11 @@ def train(model , data_loader, loss_fn, optimizer, device, epochs) :
         print(f"Epoch :{i+1}")
         train_one_epoch(model , data_loader, loss_fn, optimizer, device)
         print("-" * 10)
-    plot_loss(train_loss , "Train")
+    plot_loss(train_loss , "Train", "shallow-nn", "Train_loss_shallow.png")
     print("Training is complete!")     
 
 
-def train_model():
+def train_shallow_model():
     train_data , test_data = download_mnist_datasets()
     print("MNIST dataset has been downloaded")
 
@@ -88,8 +88,11 @@ def train_model():
     model = FeedForwadNet().to(device=device)
     
     loss_fn = cfg.loss_function
-    optimizer = torch.optim.Adam(model.parameters(), lr = cfg.learning_rate)
     
+    if cfg.optimization == "Adam" :
+        optimizer = torch.optim.Adam(model.parameters(), lr = cfg.learning_rate)
+    if cfg.optimization == "SGD":
+        optimizer = torch.optim.SGD(model.parameters(),lr = cfg.learning_rate, momentum=0.9)    
     train(model, train_data_loader, loss_fn, optimizer , device ,cfg.epochs)
     
     #Evaluation 
@@ -113,10 +116,10 @@ def train_model():
             total += targets.size(0)
             correct += (prediction == targets).sum().item()
             i += 1
-    plot_loss(test_loss, "Test")
-    plot_loss(confidence, "Confidence")
+    plot_loss(test_loss, "Test", "shallow-nn", "Test_loss_shallow.png")
+    plot_loss(confidence, "Confidence", "shallow-nn" , "Confidence_shallow.png")
     data = confidence, predictions, targets
-    plot_loss(data, "Correctness")
+    plot_loss(data, "Correctness","shallow-nn", "Correctness_shallow.png")
     print(f"Test Accuracy: {100 * correct / total:.2f}%")
 
     
