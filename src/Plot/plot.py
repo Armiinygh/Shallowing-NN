@@ -1,7 +1,6 @@
 from Config.config import cfg
 import matplotlib.pyplot as plt
 
-
 def plot_loss(loss, mode, foldername , filename):
     
     if mode == "Train": 

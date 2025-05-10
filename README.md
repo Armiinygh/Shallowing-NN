@@ -76,18 +76,35 @@ git clone https://github.com/Armiinygh/Shallowing-NN.git
 cd Shallowing-NN
 ```
 
-2. Install dependencies using Poetry:
+#### 2a. Install dependencies using Poetry:
 ```bash
 poetry install
 ```
 
-Alternatively, if you prefer using pip:
+#### 2b. Alternative to poetry, use conda:
+   1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
+
 ```bash
-python -m venv myenv
-source myenv/bin/activate  # On Windows: myenv\Scripts\activate
-pip install -r requirements.txt
+conda create -n understanding_dl_shallow_network
+```
+   2. Activate the environment:
+```bash
+conda activate understanding_dl_shallow_network
 ```
 
+   3. install the dependencies:  numpy, matplotlib, and pytorch
+```bash
+conda install anaconda::numpy
+```
+```bash
+conda install conda-forge::matplotlib
+```
+
+```bash
+conda install pytorch torchvision cudatoolkit=11.1 -c pytorch
+```
+   4. Run the code of the project in the activated conda environment that you had created in step 1.  
+ 
 ## Usage
 
 ### Running the Model
