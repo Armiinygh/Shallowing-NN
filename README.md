@@ -91,23 +91,21 @@ git clone https://github.com/your-username/Shallowing-NN.git
 cd Shallowing-NN
 ```
 
-<<<<<<< HEAD
 2. Install uv and project dependencies:
-=======
 #### 2a. Install dependencies using Poetry:
->>>>>>> de06a7cc402eef007c14a0230648914313e0552f
 ```bash
 # Install uv
 pip install uv
 
-<<<<<<< HEAD
 # Create and activate virtual environment
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
 uv pip install -e .
-=======
+poetry install
+```
+
 #### 2b. Alternative to poetry, use conda:
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
 
@@ -125,7 +123,6 @@ conda install anaconda::numpy
 ```
 ```bash
 conda install conda-forge::matplotlib
->>>>>>> de06a7cc402eef007c14a0230648914313e0552f
 ```
 
 ```bash
