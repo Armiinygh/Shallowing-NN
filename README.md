@@ -3,10 +3,10 @@
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Last Commit](https://img.shields.io/github/last-commit/Armiinygh/Shallowing-NN.svg)](https://github.com/Armiinygh/Shallowing-NN/commits/main)
-[![Issues](https://img.shields.io/github/issues/Armiinygh/Shallowing-NN.svg)](https://github.com/Armiinygh/Shallowing-NN/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/your-username/Shallowing-NN.svg)](https://github.com/your-username/Shallowing-NN/commits/main)
+[![Issues](https://img.shields.io/github/issues/your-username/Shallowing-NN.svg)](https://github.com/your-username/Shallowing-NN/issues)
 
-An implementation of Shallow Neural Networks for the seminar 'Understanding Deep Learning' in the Winter Semester 2025. This project explores the capabilities and limitations of shallow neural networks using the MNIST dataset as a benchmark.
+An implementation of Shallow and Deep Neural Networks for the seminar 'Understanding Deep Learning' in the Winter Semester 2025. This project explores and compares the capabilities and limitations of both shallow and deep neural networks using the MNIST dataset as a benchmark.
 
 ## Authors
 
@@ -16,152 +16,189 @@ An implementation of Shallow Neural Networks for the seminar 'Understanding Deep
 
 ## Project Structure
 
-The project follows a modular structure:
-
 ```plaintext
 Shallowing-NN/
 ├── src/
 │   ├── Config/
-│   │   └── config.py         # Configuration parameters
+│   │   └── config.py         # Configuration parameters for both networks
 │   ├── Plot/
-│   │   └── plot.py          # Plotting utilities
-│   └── Shallow_nn/
-│       └── Shallow_nn.py    # Core neural network implementation
-├── main.py                  # Entry point
-├── pyproject.toml           # Project dependencies and metadata
+│   │   └── plot.py          # Plotting utilities for visualizations
+│   ├── Shallow_nn/
+│   │   └── Shallow_nn.py    # Shallow neural network implementation
+│   └── Deep_nn/
+│       └── Deep_nn.py       # Deep neural network implementation
+├── main.py                  # Entry point for running both networks
+├── pyproject.toml          # Project dependencies and metadata
 └── README.md               # Project documentation
 ```
 
 ## Project Description
 
-This project implements a shallow neural network architecture to classify handwritten digits from the MNIST dataset. The implementation includes:
+This project implements and compares two neural network architectures for classifying handwritten digits from the MNIST dataset:
 
-- A feedforward neural network with one hidden layer
-- Configurable network parameters (hidden layer size, learning rate, etc.)
-- Training and evaluation pipelines
-- Visualization tools for model performance
+1. **Shallow Neural Network**
+   - Single hidden layer architecture
+   - Focus on understanding basic neural network principles
+   - Simpler architecture for comparison baseline
+
+2. **Deep Neural Network**
+   - Multiple hidden layers
+   - More complex architecture
+   - Demonstrates the power of deep learning
 
 ### Key Features
 
-1. **Network Architecture**
-   - Input Layer: 784 neurons (28x28 flattened images)
-   - Hidden Layer: Configurable size (default 256 neurons)
-   - Output Layer: 10 neurons (digit classes 0-9)
-   - ReLU activation function
-   - Softmax output layer
+1. **Network Architectures**
+   - **Shallow Network:**
+     - Input Layer: 784 neurons (28x28 flattened images)
+     - Single Hidden Layer: Configurable size (default 256 neurons)
+     - Output Layer: 10 neurons (digit classes 0-9)
+     - ReLU activation function
+     - Softmax output layer
+
+   - **Deep Network:**
+     - Input Layer: 784 neurons
+     - Multiple Hidden Layers with configurable sizes
+     - Output Layer: 10 neurons
+     - Advanced activation functions
+     - Dropout layers for regularization
 
 2. **Training Pipeline**
    - Cross-entropy loss function
-   - Adam optimizer
+   - Multiple optimizer options (Adam, SGD)
    - Configurable batch size and epochs
    - Progress tracking with loss visualization
+   - Separate training loops for shallow and deep networks
 
 3. **Evaluation Metrics**
-   - Test accuracy
+   - Test accuracy for both networks
    - Prediction confidence visualization
    - Correctness analysis
    - Loss tracking for both training and testing
+   - Comparative analysis between networks
 
 ## Installation
 
 ### Prerequisites
 - Python 3.11 or higher
-- Poetry (Python package manager)
+- pip (Python package installer)
 
 ### Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Armiinygh/Shallowing-NN.git
+git clone https://github.com/your-username/Shallowing-NN.git
 cd Shallowing-NN
 ```
 
-2. Install dependencies using Poetry:
+2. Install uv and project dependencies:
 ```bash
-poetry install
-```
+# Install uv
+pip install uv
 
-Alternatively, if you prefer using pip:
-```bash
-python -m venv myenv
-source myenv/bin/activate  # On Windows: myenv\Scripts\activate
-pip install -r requirements.txt
+# Create and activate virtual environment
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+uv pip install -e .
 ```
 
 ## Usage
 
-### Running the Model
+### Running the Models
 
-1. To train and evaluate the model with default settings:
+1. To train and evaluate both models:
 ```bash
 python main.py
 ```
 
-2. The model will:
+2. The script will:
    - Download the MNIST dataset (first run only)
-   - Train for the specified number of epochs
-   - Generate performance visualizations
-   - Save the trained model
+   - Train both shallow and deep networks
+   - Generate performance visualizations for each network
+   - Save the trained models
 
 ### Configuration
 
 You can modify the model parameters in `src/Config/config.py`:
 
 ```python
+# Common parameters
 cfg.epochs = 5              # Number of training epochs
 cfg.batch_size = 128        # Batch size
 cfg.learning_rate = 0.00001 # Learning rate
-cfg.output_size = 256      # Hidden layer size
+cfg.optimization = "Adam"   # Optimizer choice (Adam or SGD)
+
+# Shallow network parameters
+cfg.shallow_output_size = 256  # Hidden layer size for shallow network
+
+# Deep network parameters
+cfg.deep_hidden_sizes = [512, 256, 128]  # Hidden layer sizes for deep network
+cfg.dropout_rate = 0.2                   # Dropout rate for deep network
 ```
 
 ## Output and Visualizations
 
-The project generates several visualizations to help understand the model's performance:
+The project generates separate visualizations for each network type, saved in their respective directories:
 
-1. **Training Loss** (`src/Plot/Train_loss.png`)
+### Shallow Network Visualizations (`src/Plot/shallow-nn/`)
+1. **Training Loss** (`Train_loss_shallow.png`)
    - Shows loss progression during training
    - X-axis: Epochs
    - Y-axis: Loss value
 
-2. **Test Loss** (`src/Plot/Test_loss.png`)
+2. **Test Loss** (`Test_loss_shallow.png`)
    - Shows loss on test dataset
    - X-axis: Epochs
    - Y-axis: Loss value
 
-3. **Prediction Confidence** (`src/Plot/Confidence.png`)
+3. **Prediction Confidence** (`Confidence_shallow.png`)
    - Histogram of model's confidence in predictions
    - X-axis: Confidence value
    - Y-axis: Frequency
 
-4. **Correctness Analysis** (`src/Plot/Correctness.png`)
+4. **Correctness Analysis** (`Correctness_shallow.png`)
    - Scatter plot showing relationship between confidence and correctness
    - X-axis: Sample index
    - Y-axis: Confidence value
    - Color: Correct (yellow) vs Incorrect (purple) predictions
 
+### Deep Network Visualizations (`src/Plot/deep-nn/`)
+Similar visualizations are generated for the deep network with corresponding filenames:
+- `Train_loss_deep.png`
+- `Test_loss_deep.png`
+- `Confidence_deep.png`
+- `Correctness_deep.png`
+
 ## Model Performance
 
-The shallow neural network typically achieves:
+### Shallow Network
 - Training loss reduction from ~2.0 to ~0.89 over 5 epochs
 - Test accuracy varies based on configuration
 - Performance analysis available through generated visualizations
 
+### Deep Network
+- Typically achieves higher accuracy than shallow network
+- More complex learning patterns
+- Better feature extraction capabilities
+
 ## Future Improvements
 
-1. Architecture Enhancements:
-   - Experiment with different activation functions
-   - Try various hidden layer sizes
-   - Implement dropout for regularization
+1. **Architecture Enhancements**
+   - Experiment with different activation functions (GELU, ELU)
+   - Implement batch normalization layers
+   - Add residual connections
 
-2. Training Optimizations:
-   - Learning rate scheduling
-   - Early stopping
-   - Cross-validation
+2. **Training Optimizations**
+   - Implement learning rate scheduling
+   - Add early stopping mechanism
+   - Implement cross-validation
 
-3. Code Structure:
-   - Modularize components into separate classes
-   - Add comprehensive testing
+3. **Code Structure**
+   - Add comprehensive testing suite
    - Implement logging system
+   - Add type hints and documentation
 
 ## References
 
