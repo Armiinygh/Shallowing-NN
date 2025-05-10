@@ -1,8 +1,7 @@
 from Config.config import cfg
 import matplotlib.pyplot as plt
 
-#TODO add legends
-def plot_loss(loss, mode):
+def plot_loss(loss, mode, foldername , filename):
     
     if mode == "Train": 
         plt.clf()
@@ -13,7 +12,7 @@ def plot_loss(loss, mode):
         plt.xticks(ticks = x , labels=labels)
         plt.xlabel('Epoch')
         plt.ylabel('Loss value')
-        plt.savefig('src/Plot/Train_loss.png')
+        plt.savefig(f'src/Plot/{foldername}/{filename}')
     
     if mode == "Test":
         plt.plot(loss)
@@ -23,7 +22,8 @@ def plot_loss(loss, mode):
         plt.xticks(ticks = x , labels=labels)
         plt.xlabel('Epoch')
         plt.ylabel('Loss value')
-        plt.savefig('src/Plot/Test_loss.png')
+        plt.gca().legend(('Train','Test'))
+        plt.savefig(f'src/Plot/{foldername}/{filename}')
         
     if mode == "Confidence":
         plt.clf()
@@ -31,7 +31,7 @@ def plot_loss(loss, mode):
         plt.title("Confidence values in each epoch step")
         plt.xlabel('Confidence value')
         plt.ylabel('Frequency')
-        plt.savefig('src/Plot/Confidence.png')
+        plt.savefig(f'src/Plot/{foldername}/{filename}')
     if mode == "Correctness":
         plt.clf()
         confidences, predictions, targets = loss 
@@ -44,6 +44,6 @@ def plot_loss(loss, mode):
         plt.xlabel('Index')
         plt.ylabel('Confidence value')
         plt.colorbar(label='Correct (1) / Incorrect (0)')
-        plt.savefig('src/Plot/Correctness.png')
+        plt.savefig(f'src/Plot/{foldername}/{filename}')
 
 

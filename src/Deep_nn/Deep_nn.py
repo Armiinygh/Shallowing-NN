@@ -6,6 +6,7 @@ from torchvision.transforms import ToTensor
 import ssl
 from Config.config import cfg
 from Plot.plot import plot_loss
+import torch.nn.init as init
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -13,19 +14,25 @@ train_loss = []
 test_loss = []
 
 
+
 class FeedForwadNet(nn.Module):
     def __init__(self):
         super().__init__()
+        
         self.flatten = nn.Flatten()
+        input_layer= nn.Linear(28*28, 512)
+        init.xavier_uniform_(input_layer.weight)
         self.dense_layers = nn.Sequential(
-            nn.Linear(
-                28*28, cfg.output_size
-            ), 
+            input_layer,
+            cfg.activation_function,
+            nn.Linear(512 , 256),
+            cfg.activation_function,
+            nn.Linear(256, 128), 
+            cfg.activation_function,
+            nn.Linear(128, cfg.output_size),
             cfg.activation_function,
             nn.Linear(cfg.output_size, 10)
-        )
-        self.softmax = nn.Softmax(dim = 1)
-        
+        )        
     
     def forward (self, input_data):
         flattened_data = self.flatten(input_data)
@@ -70,11 +77,11 @@ def train(model , data_loader, loss_fn, optimizer, device, epochs) :
         print(f"Epoch :{i+1}")
         train_one_epoch(model , data_loader, loss_fn, optimizer, device)
         print("-" * 10)
-    plot_loss(train_loss , "Train", "shallow-nn", "Train_loss_shallow.png")
+    plot_loss(train_loss , "Train", "deep-nn", "Train_loss_deep.png")
     print("Training is complete!")     
 
 
-def train_shallow_model():
+def train_deep_model():
     train_data , test_data = download_mnist_datasets()
     print("MNIST dataset has been downloaded")
 
@@ -88,11 +95,11 @@ def train_shallow_model():
     model = FeedForwadNet().to(device=device)
     
     loss_fn = cfg.loss_function
-    
     if cfg.optimization == "Adam" :
         optimizer = torch.optim.Adam(model.parameters(), lr = cfg.learning_rate)
     if cfg.optimization == "SGD":
-        optimizer = torch.optim.SGD(model.parameters(),lr = cfg.learning_rate, momentum=0.9)    
+        optimizer = torch.optim.SGD(model.parameters(),lr = cfg.learning_rate, momentum=0.9)
+    
     train(model, train_data_loader, loss_fn, optimizer , device ,cfg.epochs)
     
     #Evaluation 
@@ -116,10 +123,10 @@ def train_shallow_model():
             total += targets.size(0)
             correct += (prediction == targets).sum().item()
             i += 1
-    plot_loss(test_loss, "Test", "shallow-nn", "Test_loss_shallow.png")
-    plot_loss(confidence, "Confidence", "shallow-nn" , "Confidence_shallow.png")
+    plot_loss(test_loss, "Test","deep-nn", "Test_loss_deep.png")
+    plot_loss(confidence, "Confidence","deep-nn", "Confidence_deep.png")
     data = confidence, predictions, targets
-    plot_loss(data, "Correctness","shallow-nn", "Correctness_shallow.png")
+    plot_loss(data, "Correctness","deep-nn", "Correctness_deep.png")
     print(f"Test Accuracy: {100 * correct / total:.2f}%")
 
     
@@ -130,8 +137,5 @@ def train_shallow_model():
     print(f"Model has been trained and stored at {file_path}")
     
     
-    
-    #TODO separate each module to a class 
-    #TODO plot the loss functions and every other parameter that make sense using different values and compare it to the results of the deep neural networks 
     
     
