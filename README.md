@@ -79,7 +79,12 @@ cd Shallowing-NN
 #### 2a. Install dependencies using Poetry:
 ```bash
 poetry install
+
+poetry env activate
 ```
+The latter command will just print the environment activation command into the shell.
+The activation command needs to be executed, when code is to be executed in the shell.
+
 
 #### 2b. Alternative to poetry, use conda:
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"

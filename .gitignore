@@ -52,4 +52,6 @@ lightning_logs/
 /src/Shallow_nn/myenv_3.10
 .gz
 
+# MNIST dataset folder
+/data
 
