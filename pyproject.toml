@@ -4,14 +4,16 @@ version = "0.1.0"
 description = "A short description of your project"
 authors = ["Seyedalireza Yaghoubi <Syaghoubi@uni-osnabrueck.de>"]
 license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
 torch = "^2.1.0"
 numpy = "^1.24.0"
 matplotlib = "^3.10.0"
+torchvision = "^0.22.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
 black = "^24.0.0"
 
