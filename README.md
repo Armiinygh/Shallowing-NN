@@ -77,13 +77,33 @@ cd Shallowing-NN
 ```
 
 #### 2a. Install dependencies using Poetry:
+First ensure that poetry is installed and [up to date](https://python-poetry.org/docs/):
+```bash
+poetry --version
+```
+otherwise follow the instructions in the [installation guide](https://python-poetry.org/docs/). If not done already configure poetry to prefer a local virtual environment:
+```bash
+poetry config virtualenvs.in-project true
+```
+Now poetry should install the dependencies later into the local virtual environment (e.g. .venv)
+
+Then check which python version is used by executing:
+```bash
+python --version
+```
+
+If the python version is appropriate (see. [Prerequisites](#prerequisites)), then create a local virtual environment by executing:
+```bash
+python -m venv .venv
+```
+The project root should now contain a `.venv` folder
 ```bash
 poetry install
-
-poetry env activate
 ```
-The latter command will just print the environment activation command into the shell.
-The activation command needs to be executed, when code is to be executed in the shell.
+Poetry installs the dependencies into the virtual environment, which can be sourced by:
+```bash
+source .venv/bin/activate
+```
 
 
 #### 2b. Alternative to poetry, use conda:
