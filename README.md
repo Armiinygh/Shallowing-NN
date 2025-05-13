@@ -92,7 +92,7 @@ Then check which python version is used by executing:
 python --version
 ```
 
-If the python version is appropriate (see. [Prerequisites](#prerequisites)), then create a local virtual environment by executing:
+If the python version is appropriate (see [Prerequisites](#prerequisites)), then create a local virtual environment by executing:
 ```bash
 python -m venv .venv
 ```
