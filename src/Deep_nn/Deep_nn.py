@@ -5,13 +5,15 @@ from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 import ssl
 from Config.config import cfg
-from Plot.plot import plot_loss
+from Plot.plot import saveWeigths_PlotAll
 import torch.nn.init as init
+from datetime import datetime
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
 train_loss = []
 test_loss = []
+plotables = dict()
 
 
 class FeedForwadNet(nn.Module):
@@ -71,7 +73,7 @@ def train(model, data_loader, loss_fn, optimizer, device, epochs):
         print(f"Epoch :{i+1}")
         train_one_epoch(model, data_loader, loss_fn, optimizer, device)
         print("-" * 10)
-    plot_loss(train_loss, "Train", "deep-nn", "Train_loss_deep.png")
+    plotables["Train"] = train_loss
     print("Training is complete!")
 
 
@@ -117,13 +119,12 @@ def train_deep_model():
             total += targets.size(0)
             correct += (prediction == targets).sum().item()
             i += 1
-    plot_loss(test_loss, "Test", "deep-nn", "Test_loss_deep.png")
-    plot_loss(confidence, "Confidence", "deep-nn", "Confidence_deep.png")
+
+    timestamp_string = f"{datetime.now():%Y%m%d_%H%M}"
+    modelname = "deep-nn_" + timestamp_string
+    plotables["Test"] = test_loss
+    plotables["Confidence"] = confidence
     data = confidence, predictions, targets
-    plot_loss(data, "Correctness", "deep-nn", "Correctness_deep.png")
+    plotables["Correctness"] = data
     print(f"Test Accuracy: {100 * correct / total:.2f}%")
-
-    file_path = "feedforwardnet.pth"
-    torch.save(model.state_dict(), file_path)
-
-    print(f"Model has been trained and stored at {file_path}")
+    saveWeigths_PlotAll(plotables, model.state_dict(), modelname)
