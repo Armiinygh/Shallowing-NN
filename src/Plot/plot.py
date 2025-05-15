@@ -1,10 +1,11 @@
 from pathlib import Path
 from Config.config import cfg
 import matplotlib.pyplot as plt
+import torch
 
 
-def plot_loss(loss, mode, foldername, filename):
-    plot_directory = Path(f"src/Plot/{foldername}")
+def plot_loss(loss, mode, folderpath, filename):
+    plot_directory = folderpath.joinpath(Path("Plot"))
     plot_directory.mkdir(parents=True, exist_ok=True)
 
     if mode == "Train":
@@ -51,3 +52,16 @@ def plot_loss(loss, mode, foldername, filename):
         plt.ylabel("Confidence value")
         plt.colorbar(label="Correct (1) / Incorrect (0)")
         plt.savefig(plot_directory / filename)
+
+
+def saveWeigths_PlotAll(plottables, modeldict, modelname):
+    """saves the modelweights and creates plots under src/Results/modelname
+    plottables dict with key: plotname and value: list of plottable items see plot_loss
+    """
+    results_directory = Path(f"src/Results/{modelname}")
+    results_directory.mkdir(parents=True, exist_ok=True)
+    for key, value in plottables.items():
+        plot_loss(value, key, results_directory, f"{key}.png")
+    weights_directory = results_directory.joinpath("Weights")
+    weights_directory.mkdir(parents=True, exist_ok=True)
+    torch.save(modeldict, f"{weights_directory.__str__()}/{modelname}.pth")

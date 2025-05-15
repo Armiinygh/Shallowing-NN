@@ -5,12 +5,14 @@ from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 import ssl
 from Config.config import cfg
-from Plot.plot import plot_loss
+from Plot.plot import saveWeigths_PlotAll
+from datetime import datetime
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
 train_loss = []
 test_loss = []
+plotables = dict()
 
 
 class FeedForwadNet(nn.Module):
@@ -62,7 +64,8 @@ def train(model, data_loader, loss_fn, optimizer, device, epochs):
         print(f"Epoch :{i+1}")
         train_one_epoch(model, data_loader, loss_fn, optimizer, device)
         print("-" * 10)
-    plot_loss(train_loss, "Train", "shallow-nn", "Train_loss_shallow.png")
+
+    plotables["Train"] = train_loss
     print("Training is complete!")
 
 
@@ -85,6 +88,7 @@ def train_shallow_model():
         optimizer = torch.optim.SGD(
             model.parameters(), lr=cfg.learning_rate, momentum=0.9
         )
+
     train(model, train_data_loader, loss_fn, optimizer, device, cfg.epochs)
 
     # Evaluation
@@ -108,16 +112,15 @@ def train_shallow_model():
             total += targets.size(0)
             correct += (prediction == targets).sum().item()
             i += 1
-    plot_loss(test_loss, "Test", "shallow-nn", "Test_loss_shallow.png")
-    plot_loss(confidence, "Confidence", "shallow-nn", "Confidence_shallow.png")
+
+    timestamp_string = f"{datetime.now():%Y%m%d_%H%M}"
+    modelname = "shallow-nn_" + timestamp_string
+    plotables["Test"] = test_loss
+    plotables["Confidence"] = confidence
     data = confidence, predictions, targets
-    plot_loss(data, "Correctness", "shallow-nn", "Correctness_shallow.png")
+    plotables["Correctness"] = data
     print(f"Test Accuracy: {100 * correct / total:.2f}%")
-
-    file_path = "feedforwardnet.pth"
-    torch.save(model.state_dict(), file_path)
-
-    print(f"Model has been trained and stored at {file_path}")
+    saveWeigths_PlotAll(plotables, model.state_dict(), modelname)
 
     # TODO separate each module to a class
     # TODO plot the loss functions and every other parameter that make sense using different values and compare it to the results of the deep neural networks
