@@ -66,7 +66,7 @@ This project implements a shallow neural network architecture to classify handwr
 
 ### Prerequisites
 - Python 3.11 or higher
-- Poetry (Python package manager)
+- UV (Python package manager)
 
 ### Setup
 
@@ -86,7 +86,7 @@ The later command install all required packages and dependencies applied in the 
 The activation command needs to be executed, when code is to be executed in the shell.
 
 
-#### 2b. Alternative to poetry, use conda:
+#### 2b. Alternative to UV, use conda:
    1. create a new conda environment, for example: "conda create -n understanding_dl_shallow_network"
 
 ```bash
