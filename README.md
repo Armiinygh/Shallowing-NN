@@ -6,7 +6,7 @@
 [![Last Commit](https://img.shields.io/github/last-commit/Armiinygh/Shallowing-NN.svg)](https://github.com/Armiinygh/Shallowing-NN/commits/main)
 [![Issues](https://img.shields.io/github/issues/Armiinygh/Shallowing-NN.svg)](https://github.com/Armiinygh/Shallowing-NN/issues)
 
-An implementation of Shallow Neural Networks for the seminar 'Understanding Deep Learning' in the Winter Semester 2025. This project explores the capabilities and limitations of shallow neural networks using the MNIST dataset as a benchmark.
+An implementation of Shallow Neural Networks for the seminar 'Understanding Deep Learning' in the Summer Semester 2025. This project explores the capabilities and limitations of shallow neural networks using the MNIST dataset as a benchmark.
 
 ## Authors
 
@@ -76,13 +76,13 @@ git clone https://github.com/Armiinygh/Shallowing-NN.git
 cd Shallowing-NN
 ```
 
-#### 2a. Install dependencies using Poetry:
+#### 2a. Install dependencies using UV:
 ```bash
-poetry install
+pip install uv
 
-poetry env activate
+uv pip install -r pyproject.toml  
 ```
-The latter command will just print the environment activation command into the shell.
+The later command install all required packages and dependencies applied in the application
 The activation command needs to be executed, when code is to be executed in the shell.
 
 
