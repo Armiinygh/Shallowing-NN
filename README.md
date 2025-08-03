@@ -185,6 +185,45 @@ The shallow neural network typically achieves:
    - Add comprehensive testing
    - Implement logging system
 
+
+
+## 🔍 New Feature: Bayesian Hyperparameter Optimization
+
+This project now includes **Bayesian Optimization** for automated hyperparameter tuning of both shallow and deep neural networks. It enables intelligent and efficient search for optimal hyperparameters, resulting in improved performance and reduced manual effort.
+
+### ✨ Highlights
+
+- Automatic selection of:
+  - `learning_rate`
+  - `batch_size`
+  - `output_size` (hidden layer size)
+  - `loss_function` (`CrossEntropyLoss`, `NLLLoss`)
+  - `activation_function` (`ReLU`, `Tanh`, `Sigmoid`)
+  - `epochs`
+- Separate optimization flows for:
+  - `bo_train_shallow_model` (shallow NN)
+  - `bo_train_deep_model` (deep NN)
+- Dynamic construction of a `ModelParams` dataclass from optimized parameters
+- Models are trained with the best configuration discovered
+
+---
+
+### 🧪 How It Works
+
+A predefined search space guides the optimizer:
+
+```python
+pbounds = {
+    'learning_rate': (1e-5, 1e-2),
+    'batch_size': (32, 256),
+    'output_size': (64, 512),
+    'loss_function_idx': (0, 0.99),
+    'activation_function_idx': (0, 1.99),
+    'epochs': (1, 5)
+}
+
+
+
 ## References
 
 ### Shallow Neural Networks
